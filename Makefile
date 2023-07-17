@@ -3,12 +3,13 @@ IMAGE_NAME := "tromzo:latest"
 PORT := "8080"
 POOL_SIZE := "10"
 
-build:
-	@docker build . -t tromzo:latest
 
 create_makefile:
 	@echo "PORT=$(PORT)" > ./backend/.env
 	@echo "POOL_SIZE=$(POOL_SIZE)" >> ./backend/.env
+
+build: create_makefile
+	@docker build . -t tromzo:latest
 
 test: build
 	@docker run --rm -it tromzo:latest pytest -v
